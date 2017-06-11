@@ -34,12 +34,12 @@
         virtual uint16_t Read();
     };
 
-    class Port16Bit : public Port {
+    class Port32Bit : public Port {
       public::
-        Port16Bit(uint16_t protnumber);
-        ~Port16Bit();
-        virtual void Write(uint16_t data);
-        virtual uint16_t Read();
+        Port32Bit(uint16_t protnumber);
+        ~Port32Bit();
+        virtual void Write(uint32_t data);
+        virtual uint32_t Read();
     };
-    
+
 #endif
