@@ -19,8 +19,8 @@ void Port8Bit::Write(uint8_t data) {
 }
 
 uint8_t Port8Bit::Read() {
-    uint8_t result;
-    _asm_volatile();
-    return 
+    uint8_t result; 
+    _asm_volatile("inb %1, %0" : : "=a" (result), "Nd" (prot) );
+    return result;
 }
 
