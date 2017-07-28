@@ -26,3 +26,15 @@ uint8_t Port8Bit::Read() {
     return result;
 }
 
+Port8BitSlow::Port8BitSlow(uint16_t portnumber) : Port8Bit(portnumber) {
+
+}
+
+Port8BitSlow::~Port8BitSlow() {
+
+}
+
+void Port8BitSlow::Write(uint8_t data) {
+   Write8Slow(portnumber, data);
+}
+

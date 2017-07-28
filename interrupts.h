@@ -29,6 +29,11 @@
             uint8_t DescriptorPrivilegeLevel,
             uint8_t DescriptorType
         );
+
+        Port8BitSlow picMasterCommand; //主
+        Port8BitSlow picMasterData;
+        Port8BitSlow picSlaveCommand; //副
+        Port8BitSlow picSlaveData;
       
       public: 
         InterruptManager(GlobalDescriptorTable* gdt);
