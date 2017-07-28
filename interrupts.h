@@ -15,6 +15,11 @@
             uint16_t handlerAddressHighBits;
         } __attribute__((packed));
         
+        struct InterruptDescriptorTablePoint {
+            uint16_t size;
+            uint32_t base;
+        } __attribute__((packed));
+        
         static GateDescriptor interruptDescriptorTable[256];    
 
         static void SetInterruptDescriptorTableEntry(
@@ -28,6 +33,8 @@
       public: 
         InterruptManager(GlobalDescriptorTable* gdt);
         ~InterruptManager();
+
+        void Active();
 
         static uint32_t handleInterrupt(uint8_t interruptNumber, uint32_t esp);
         

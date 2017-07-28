@@ -11,7 +11,7 @@ void InterruptManager::SetInterruptDescriptorTableEntry(
     uint8_t DescriptorPrivilegeLevel,
     uint8_t DescriptorType) {
 
-    const uint8_t IDT_DESC_PRESENT = 0;
+    const uint8_t IDT_DESC_PRESENT = 0x80;
     
     interruptDescriptorTable[interruptNumber].handlerAddressLowBits = ((uint32_t)handler) & 0xFFFF;
     interruptDescriptorTable[interruptNumber].handlerAddressLowBits = (((uint32_t)handler) >> 16) & 0xFFFF;
@@ -27,10 +27,23 @@ InterruptManager::InterruptManager(GlobalDescriptorTable* gdt) {
 
     for(uint16_t i = 0; i < 256; i++)
         SetInterruptDescriptorTableEntry(i, CodeSegment, &IgnoreInterruptRequest, 0, IDT_INTERRUPT_GATE);
+
+    SetInterruptDescriptorTableEntry(0x20, CodeSegment, &HandleInterruptRequest0x00, 0, IDT_INTERRUPT_GATE);
+    SetInterruptDescriptorTableEntry(0x20, CodeSegment, &HandleInterruptRequest0x01, 0, IDT_INTERRUPT_GATE);
+
+    InterruptDescriptorTablePoint idt;
+    idt.size = 256 * sizeof(GateDescriptor) -1;
+    idt.base = (uint32_t)interruptDescriptorTable;
+    asm volatile("lidt %0" : : "m" (idt));
 }
 
 InterruptManager::~InterruptManager() {
 
+}
+
+void InterruptManager::Active() {
+    //asm("sti");
+    printf("s111111\n");
 }
 
 
